@@ -1,6 +1,6 @@
 import { ErrorCodes } from "./enum";
 
-export class AntiCaptchaError extends Error {
+export class CapMonsterError extends Error {
     public readonly code: ErrorCodes;
 
     constructor(code: ErrorCodes, message: string) {

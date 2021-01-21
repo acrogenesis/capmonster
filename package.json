@@ -1,8 +1,8 @@
 {
-  "name": "anticaptcha",
+  "name": "capmonster",
   "version": "2.0.3",
-  "description": "A modern wrapper around AntiCaptcha API.",
-  "author": "Andréas \"ScreamZ\" Hanss",
+  "description": "A modern wrapper around CapMonster API.",
+  "author": "Adrian Rangel",
   "license": "MIT",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -24,9 +24,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ScreamZ/anti-captcha.git"
+    "url": "https://github.com/acrogensis/capmonster.git"
   },
   "bugs": {
-    "url": "https://github.com/ScreamZ/anti-captcha/issues"
+    "url": "https://github.com/acrogensis/capmonster/issues"
   }
 }

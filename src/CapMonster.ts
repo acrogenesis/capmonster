@@ -1,6 +1,6 @@
 import { ApiResponse, ApisauceInstance, create } from "apisauce";
 import { LanguagePoolTypes, QueueTypes, TaskStatus, TaskTypes } from "./enum";
-import { AntiCaptchaError } from "./error";
+import { CapMonsterError } from "./error";
 import {
   ICreateTaskResponse,
   IGetBalanceResponse,
@@ -8,20 +8,20 @@ import {
   IGetTaskResultResponse
 } from "./interfaces";
 
-export class AntiCaptcha {
+export class CapMonster {
   private api: ApisauceInstance;
   private debug: boolean;
 
   /**
-   * Creates an instance of AntiCaptcha.
+   * Creates an instance of CapMonster.
    *
    * @param {strig} clientKey - The client key provided in your admin panel.
    * @param {boolean} [debugMode=false] - Whether you want to get debug log in the console.
-   * @memberof AntiCaptcha
+   * @memberof CapMonster
    */
   constructor(clientKey: string, debugMode = false) {
     this.api = create({
-      baseURL: "https://api.anti-captcha.com"
+      baseURL: "https://api.capmonster.cloud"
     });
     this.debug = debugMode;
 
@@ -58,7 +58,7 @@ export class AntiCaptcha {
       return response.data.balance;
     }
 
-    throw new AntiCaptchaError(
+    throw new CapMonsterError(
       response.data.errorCode,
       response.data.errorDescription
     );
@@ -80,7 +80,7 @@ export class AntiCaptcha {
    * @param {string} websiteKey - The value of the "data-site-key" attribute.
    * @param {string} languagePool - The language pool. Default to English if not provided.
    *
-   * @memberof AntiCaptcha
+   * @memberof CapMonster
    */
   public async createTask<T>(
     task: T,
@@ -94,7 +94,7 @@ export class AntiCaptcha {
     if (response.ok && response.data.errorId === 0) {
       return response.data.taskId;
     }
-    throw new AntiCaptchaError(
+    throw new CapMonsterError(
       response.data.errorCode,
       response.data.errorDescription
     );
@@ -108,7 +108,7 @@ export class AntiCaptcha {
    * @param {number} minScore - minimum score you want to get
    * @param {string} pageAction - the action name is defined by the website owner
    * @returns {Promise<number>}
-   * @memberof AntiCaptcha
+   * @memberof CapMonster
    */
   public async createTaskRecaptchaV3Proxyless(
     websiteURL: string,
@@ -146,7 +146,7 @@ export class AntiCaptcha {
    * @param {number} [retryInterval=10000] - The amount of time before first and each try.
    *
    * @see createTask
-   * @memberof AntiCaptcha
+   * @memberof CapMonster
    */
   public async getTaskResult<T>(
     taskId: number,
@@ -179,7 +179,7 @@ export class AntiCaptcha {
         // API service failure
         if (response.ok && response.data.errorId > 0) {
           reject(
-            new AntiCaptchaError(
+            new CapMonsterError(
               response.data.errorCode,
               response.data.errorDescription
             )
